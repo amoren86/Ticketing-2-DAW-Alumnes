@@ -1,0 +1,112 @@
+# CREATES A *** NEW USER ***
+http://localhost:8081/users/save
+BODY
+{
+  "role": "EMPLOYEE",
+  "username": "robert",
+  "password": "1234567890",
+  "fullName": "Robert Planes i Pujol",
+  "extension": 3510,
+  "roomId": 1,
+  "place": "L10"
+}
+
+# UPDATES A *** USER ***
+http://localhost:8081/users/update
+BODY
+{
+  "role": "EMPLOYEE",
+  "username": "robert",
+  "password": "1234567890",
+  "fullName": "Robert Planes i Pujol",
+  "extension": 3510,
+  "roomId": 1,
+  "place": "L10"
+}
+
+# FIND *** ALL USERS ***
+GET http://localhost:8081/users/find/all
+
+# FIND *** ALL USERS *** SORTED AND PAGINATED ***
+GET http://localhost:8081/users/find/all?page=0&size=10&sort=username,asc
+
+# FIND *** ALL USERS *** FILTERED ***
+## NOTE: fullName filter: like
+http://localhost:8081/users/find/all?role=EMPLOYEE&fullName=Macia
+
+# FIND *** USER BY USERNAME ***
+GET http://localhost:8081/users/find/by/username/toni
+
+# CREATES A *** NEW TICKET *** AND A TRACKING *** OPENING ACTION ***
+POST http://localhost:8081/tickets/save
+BODY
+{
+	"category": "HARDWARE",
+	"description": "El ratolí no funciona bé, a vegades desapareix o no es mou. A més sovint he de posar un paper a sota. Ho podeu revisar? Gràcies",
+	"performer": "raul",
+	"openingDate": "05/10/2019 17:02:00"
+}
+
+# FIND *** ALL TICKETS *** Status PENDING ***
+GET http://localhost:8081/tickets/find/all/PENDING
+
+# FIND *** ALL TICKETS *** Status IN_PROCESS ***
+GET http://localhost:8081/tickets/find/all/IN_PROCESS
+
+# FIND *** ALL TICKETS *** Status HISTORICAL ***
+# TODO # GET http://localhost:8081/tickets/find/all/HISTORICAL
+
+
+# FIND *** ALL TICKETS *** SORTED AND PAGINATED ***
+GET http://localhost:8081/tickets/find/all/PENDING?page=0&size=10&sort=category,desc
+
+GET http://localhost:8081/tickets/find/all/IN_PROCESS?page=0&size=10&sort=category,desc
+
+# TODO # GET http://localhost:8081/tickets/find/all/HISTORICAL?page=0&size=10&sort=category,desc
+
+# FIND *** ALL TICKETS *** FILTERED ***
+GET http://localhost:8081/tickets/find/all/PENDING?from=24/09/2019&to=27/09/2019&reportedBy=maria&category=NETWORK
+
+GET http://localhost:8081/tickets/find/all/IN_PROCESS?from=24/09/2019&to=27/09/2019&reportedBy=maria&category=NETWORK
+
+# TODO # GET http://localhost:8081/tickets/find/all/HISTORICAL?from=24/09/2019&to=27/09/2019&reportedBy=maria&category=NETWORK
+
+# FIND *** TICKET BY ID
+GET http://localhost:8081/tickets/find/by/id/1
+
+# CREATES A *** TRACKING *** ASSIGNMENT ACTION ***
+POST http://localhost:8081/tickets/save/action
+BODY
+{
+	"type": "ASSIGNMENT",
+	"performer": "laia",
+	"date": "02/10/2019 09:21:15",
+	"ticketId": 1,
+	"technician": "raul",
+	"priority": 4
+}
+
+# CREATES A *** TRACKING *** INTERVENTION ACTION ***
+POST http://localhost:8081/tickets/save/action
+BODY
+{
+	"type": "INTERVENTION",
+	"performer": "genis",
+	"date": "05/10/2019 13:44:37",
+	"ticketId": 1,
+	"hours": 1,
+	"description": "Ratolí inalàmbric canviat per model USB."
+}
+
+# CREATES A *** TRACKING *** CLOSE ACTION ***
+POST http://localhost:8081/tickets/save/action
+BODY
+{
+	"type": "CLOSE",
+	"performer": "raul",
+	"date": "05/10/2019 17:02:00",
+	"ticketId": 1
+}
+
+# FINDS A *** TICKET TRACKING *** BY TICKET ID ***
+GET http://localhost:8081/tickets/find/tracking/by/id/1
