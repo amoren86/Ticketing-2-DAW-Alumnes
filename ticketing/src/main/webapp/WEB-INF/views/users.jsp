@@ -21,7 +21,25 @@
 	var externalMsg = "<spring:message code="users.table.body.external" />&nbsp;";
 
 	var ajaxUrl = "<c:url value="/users/ajax/list"/>";
+	
+	var removeDialogMsg = "<spring:message code="users.confirm.remove"/>";
+	var removeDialogHref = "<spring:url value="/users/remove"><spring:param name="username" value="" /></spring:url>";
 </script>
+<sec:authorize access="hasAuthority('EMPLOYEE')">
+	<script>
+	var role="EMPLOYEE";
+	</script>
+</sec:authorize>
+<sec:authorize access="hasAuthority('TECHNICIAN')">
+	<script>
+	var role="TECHNICIAN";
+	</script>
+</sec:authorize>
+<sec:authorize access="hasAuthority('SUPERVISOR')">
+	<script>
+	var role="SUPERVISOR";
+	</script>
+</sec:authorize>
 <c:url value="/resources/js/usersFilter.js" var="usersFilterJs" />
 <script type="text/javascript" src="${usersFilterJs}">
 	
@@ -86,14 +104,9 @@
 						</c:choose>
 						<td class="text-center">
 							<sec:authorize access="hasAnyAuthority('SUPERVISOR' )">
-								<c:url value="/users/remove" var="removeHref">
-									<c:param name="username" value="${user.username}" />
-								</c:url>
-								<spring:message code="users.confirm.remove"
-									arguments="${user.username}" var="confirmRemoveMsg" />
 								<button type="button" class="btn btn-danger btn-sm"
-									data-toggle="modal" data-target="#confirm"
-									onclick="changeDni('${confirmRemoveMsg}','${removeHref}')"
+									data-toggle="modal" data-target="#remove"
+									onclick="prepareRemoveDialog('${user.username}')"
 									data-backdrop="true">
 									<span class="glyphicon glyphicon-trash"> </span>
 								</button>
@@ -106,7 +119,7 @@
 	</section>
 
 	<!-- Remove Modal -->
-	<div id="confirm" class="modal fade" role="dialog">
+	<div id="remove" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 
 			<!-- Modal content-->
@@ -118,15 +131,15 @@
 					</h4>
 				</div>
 				<div class="modal-body" style="padding: 40px 50px;">
-					<p id="confirmRemoveMessage">confirmRemoveMessage</p>
+					<p id="removeDialogMessage">removeDialogMsg</p>
 				</div>
 				<div class="modal-footer">
-					<a id="removeHref" class="btn btn-danger" href="#">
+					<a id="removeDialogHref" class="btn btn-danger" href="#">
 						<span class="glyphicon glyphicon-trash"> </span>
 						<spring:message code="users.confirm.remove.button" />
 					</a>
 					<button type="button" class="btn btn-default" data-dismiss="modal">
-						<spring:message code="users.confirm.cancel.button" />
+						<spring:message code="users.confirm.remove.cancel.button" />
 					</button>
 				</div>
 			</div>

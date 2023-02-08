@@ -1,11 +1,18 @@
-function changeAllTicketId(ticketId) {
-	const ticketsId = document.getElementsByName("ticketId");
-	for (let i = 0; i < ticketsId.length; i++) {
-		ticketsId[i].value = ticketId;
-	}
+function changeTicketId(ticketId) {
+	ticketsIdInput = document.getElementById("ticketId");
+	ticketsIdInput.value = ticketId;
 }
 
-function changeConfirmClose(confirmCloseMessage, closeHref) {
-	document.getElementById("confirmCloseMessage").innerHTML = confirmCloseMessage;
-	document.getElementById("closeHref").href = closeHref;
+function prepareAssignTicketDialog(ticketId) {
+	changeTicketId(ticketId);
+}
+
+function prepareInterventionTicketDialog(ticketId) {
+	changeTicketId(ticketId);
+}
+
+function prepareCloseTicketDialog(openingDate, performer, category, description, ticketStatus) {
+	document.getElementById("closeDialogMessage").innerHTML = closeDialogMsg.replace('{0}', openingDate)
+		.replace('{1}', performer).replace('{2}', category).replace('{3}', description);
+	document.getElementById("closeDialogHref").href = closeDialogHref;
 }

@@ -25,7 +25,26 @@
 
 	var filterStatus = "${ticketsFilter.status}";
 	var ajaxUrl = "<c:url value="/tickets/ajax/list"/>";
+	
+	var ticketStatus="${ticketStatus}";
+	var closeDialogMsg="<spring:message code="tickets.confirm.close" />";
+	var closeDialogHref="<spring:url value="/tickets/close"><spring:param name="ticketId" value="" /><spring:param name="ticketStatus" value="" /></spring:url>";
 </script>
+<sec:authorize access="hasAuthority('EMPLOYEE')">
+	<script>
+	var role="EMPLOYEE";
+	</script>
+</sec:authorize>
+<sec:authorize access="hasAuthority('TECHNICIAN')">
+	<script>
+	var role="TECHNICIAN";
+	</script>
+</sec:authorize>
+<sec:authorize access="hasAuthority('SUPERVISOR')">
+	<script>
+	var role="SUPERVISOR";
+	</script>
+</sec:authorize>
 <c:url value="/resources/js/ticketsFilter.js" var="ticketsFilter" />
 <script type="text/javascript" src="${ticketsFilter}">
 	
