@@ -42,7 +42,8 @@ public class UserServiceImpl implements UserService {
 		Map<String, String> uriVariables = new HashMap<>();
 		uriVariables.put("username", username);
 
-		UserDto response = restTemplate.getForObject(uriTemplate.buildAndExpand(uriVariables).toUriString(), UserDto.class);
+		UserDto response = restTemplate.getForObject(uriTemplate.buildAndExpand(uriVariables).toUriString(),
+				UserDto.class);
 		return response;
 	}
 
@@ -88,14 +89,15 @@ public class UserServiceImpl implements UserService {
 		UriComponentsBuilder uriTemplate = UriComponentsBuilder.fromHttpUrl(baseUri);
 
 		if (filter.getRole() != null) {
-			uriTemplate.queryParam("role", filter.getRole().name());
+			uriTemplate.queryParam("roles", filter.getRole().name());
 		}
 
 		if (filter.getFullName() != null) {
 			uriTemplate.queryParam("fullName", filter.getFullName());
 		}
 
-		ResponseEntity<UserDto[]> response = restTemplate.getForEntity(uriTemplate.encode().toUriString(), UserDto[].class);
+		ResponseEntity<UserDto[]> response = restTemplate.getForEntity(uriTemplate.encode().toUriString(),
+				UserDto[].class);
 		return Arrays.asList(response.getBody());
 	}
 
